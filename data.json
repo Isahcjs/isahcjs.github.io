@@ -1,0 +1,383 @@
+
+{
+  "navigation": [
+    {
+      "id": "home",
+      "title": "Home",
+      "sections": [
+        {
+          "id": "introduction",
+          "title": "Introduction"
+        },
+        {
+          "id": "features",
+          "title": "Features"
+        },
+        {
+          "id": "installation",
+          "title": "Installation"
+        }
+      ]
+    },
+    {
+      "id": "getting-started",
+      "title": "Getting Started",
+      "sections": [
+        {
+          "id": "quick-start",
+          "title": "Quick Start"
+        },
+        {
+          "id": "basic-usage",
+          "title": "Basic Usage"
+        },
+        {
+          "id": "configuration",
+          "title": "Configuration"
+        }
+      ]
+    },
+    {
+      "id": "api",
+      "title": "API Reference",
+      "sections": [
+        {
+          "id": "application",
+          "title": "Application"
+        },
+        {
+          "id": "router",
+          "title": "Router"
+        },
+        {
+          "id": "http-client",
+          "title": "HTTP Client"
+        },
+        {
+          "id": "middleware",
+          "title": "Middleware"
+        },
+        {
+          "id": "utilities",
+          "title": "Utilities"
+        }
+      ]
+    },
+    {
+      "id": "examples",
+      "title": "Examples",
+      "sections": [
+        {
+          "id": "server-examples",
+          "title": "Server Examples"
+        },
+        {
+          "id": "client-examples",
+          "title": "Client Examples"
+        },
+        {
+          "id": "middleware-examples",
+          "title": "Middleware Examples"
+        }
+      ]
+    }
+  ],
+  "content": {
+    "home": {
+      "hero": {
+        "title": "ISAHC",
+        "subtitle": "A modern, lightweight HTTP library for Node.js",
+        "description": "Built with TypeScript, featuring both server and client capabilities with Express-like routing and middleware support.",
+        "buttons": [
+          {
+            "text": "Get Started",
+            "link": "#getting-started",
+            "style": "primary"
+          },
+          {
+            "text": "View API",
+            "link": "#api",
+            "style": "secondary"
+          }
+        ]
+      },
+      "introduction": {
+        "title": "What is ISAHC?",
+        "content": "ISAHC is a modern HTTP library for Node.js that provides both server and client functionality. It's designed to be lightweight, fast, and developer-friendly with TypeScript support out of the box."
+      },
+      "features": {
+        "title": "Key Features",
+        "items": [
+          {
+            "icon": "⚡",
+            "title": "Fast & Lightweight",
+            "description": "Minimal dependencies and optimized performance"
+          },
+          {
+            "icon": "🔧",
+            "title": "TypeScript First",
+            "description": "Built with TypeScript for better developer experience"
+          },
+          {
+            "icon": "🛣️",
+            "title": "Express-like Routing",
+            "description": "Familiar routing patterns and middleware support"
+          },
+          {
+            "icon": "🌐",
+            "title": "HTTP Client",
+            "description": "Built-in HTTP client with fetch-like API"
+          },
+          {
+            "icon": "🧩",
+            "title": "Middleware Support",
+            "description": "Extensible middleware system for JSON, static files, and more"
+          },
+          {
+            "icon": "📦",
+            "title": "Dual Package",
+            "description": "Supports both CommonJS and ES modules"
+          }
+        ]
+      },
+      "installation": {
+        "title": "Installation",
+        "content": "Install ISAHC using npm or yarn:",
+        "code": {
+          "npm": "npm install isahc",
+          "yarn": "yarn add isahc"
+        }
+      }
+    },
+    "getting-started": {
+      "quick-start": {
+        "title": "Quick Start",
+        "content": "Get up and running with ISAHC in just a few lines of code:",
+        "code": "import { createApp } from 'isahc';\n\nconst app = createApp();\n\napp.get('/', (ctx) => {\n  ctx.json({ message: 'Hello, World!' });\n});\n\napp.listen(3000, () => {\n  console.log('Server running on port 3000');\n});"
+      },
+      "basic-usage": {
+        "title": "Basic Usage",
+        "content": "Here's how to create a basic server with routing:",
+        "sections": [
+          {
+            "title": "Creating an Application",
+            "content": "Start by creating an application instance:",
+            "code": "import { Application } from 'isahc';\n\nconst app = new Application();\n// or\nconst app = createApp();"
+          },
+          {
+            "title": "Adding Routes",
+            "content": "Add routes using HTTP methods:",
+            "code": "app.get('/users', (ctx) => {\n  ctx.json({ users: [] });\n});\n\napp.post('/users', (ctx) => {\n  const user = ctx.request.body;\n  ctx.json({ created: user });\n});\n\napp.put('/users/:id', (ctx) => {\n  const id = ctx.params.id;\n  ctx.json({ updated: id });\n});\n\napp.delete('/users/:id', (ctx) => {\n  const id = ctx.params.id;\n  ctx.json({ deleted: id });\n});"
+          }
+        ]
+      },
+      "configuration": {
+        "title": "Configuration",
+        "content": "Configure your application with middleware and options:",
+        "code": "import { createApp, json, urlencoded, staticFiles } from 'isahc';\n\nconst app = createApp();\n\n// Add middleware\napp.use(json());\napp.use(urlencoded({ extended: true }));\napp.use(staticFiles('./public'));\n\n// Configure server\napp.listen(3000, '0.0.0.0', () => {\n  console.log('Server running on http://0.0.0.0:3000');\n});"
+      }
+    },
+    "api": {
+      "application": {
+        "title": "Application",
+        "description": "The main application class that extends Router and provides server functionality.",
+        "methods": [
+          {
+            "name": "listen(port?, host?, callback?)",
+            "description": "Start the HTTP server",
+            "parameters": [
+              {
+                "name": "port",
+                "type": "number",
+                "optional": true,
+                "description": "Port number (default: 3000)"
+              },
+              {
+                "name": "host",
+                "type": "string",
+                "optional": true,
+                "description": "Host address (default: 'localhost')"
+              },
+              {
+                "name": "callback",
+                "type": "function",
+                "optional": true,
+                "description": "Callback function called when server starts"
+              }
+            ],
+            "returns": "Promise<void>",
+            "example": "app.listen(3000, '0.0.0.0', () => {\n  console.log('Server started');\n});"
+          },
+          {
+            "name": "close()",
+            "description": "Close the HTTP server",
+            "returns": "Promise<void>",
+            "example": "await app.close();"
+          }
+        ]
+      },
+      "router": {
+        "title": "Router",
+        "description": "The router class handles HTTP routing and middleware.",
+        "methods": [
+          {
+            "name": "get(path, ...handlers)",
+            "description": "Add a GET route",
+            "parameters": [
+              {
+                "name": "path",
+                "type": "string",
+                "description": "Route path pattern"
+              },
+              {
+                "name": "handlers",
+                "type": "RouteHandler[]",
+                "description": "Route handler functions"
+              }
+            ],
+            "example": "router.get('/users/:id', (ctx) => {\n  ctx.json({ id: ctx.params.id });\n});"
+          },
+          {
+            "name": "post(path, ...handlers)",
+            "description": "Add a POST route",
+            "example": "router.post('/users', (ctx) => {\n  const user = ctx.request.body;\n  ctx.json({ created: user });\n});"
+          },
+          {
+            "name": "use(middleware)",
+            "description": "Add middleware",
+            "parameters": [
+              {
+                "name": "middleware",
+                "type": "MiddlewareFunction",
+                "description": "Middleware function"
+              }
+            ],
+            "example": "router.use(json());"
+          }
+        ]
+      },
+      "http-client": {
+        "title": "HTTP Client",
+        "description": "Built-in HTTP client for making requests.",
+        "methods": [
+          {
+            "name": "createClient(baseURL?)",
+            "description": "Create a new HTTP client instance",
+            "parameters": [
+              {
+                "name": "baseURL",
+                "type": "string",
+                "optional": true,
+                "description": "Base URL for all requests"
+              }
+            ],
+            "returns": "HttpClient",
+            "example": "const client = createClient('https://api.example.com');"
+          },
+          {
+            "name": "get(url, options?)",
+            "description": "Make a GET request",
+            "example": "const response = await get('https://api.example.com/users');\nconsole.log(response.data);"
+          },
+          {
+            "name": "post(url, data?, options?)",
+            "description": "Make a POST request",
+            "example": "const response = await post('https://api.example.com/users', {\n  name: 'John Doe',\n  email: 'john@example.com'\n});"
+          }
+        ]
+      },
+      "middleware": {
+        "title": "Middleware",
+        "description": "Built-in middleware functions for common tasks.",
+        "functions": [
+          {
+            "name": "json(options?)",
+            "description": "Parse JSON request bodies",
+            "example": "app.use(json({ limit: '10mb' }));"
+          },
+          {
+            "name": "urlencoded(options?)",
+            "description": "Parse URL-encoded request bodies",
+            "example": "app.use(urlencoded({ extended: true }));"
+          },
+          {
+            "name": "staticFiles(root, options?)",
+            "description": "Serve static files",
+            "example": "app.use(staticFiles('./public', {\n  index: 'index.html'\n}));"
+          }
+        ]
+      },
+      "utilities": {
+        "title": "Utilities",
+        "description": "Utility classes for common operations.",
+        "classes": [
+          {
+            "name": "HttpUtils",
+            "description": "HTTP utility functions",
+            "methods": [
+              {
+                "name": "getStatusText(code)",
+                "description": "Get status text for HTTP status code"
+              },
+              {
+                "name": "parseUrl(url)",
+                "description": "Parse URL into components"
+              }
+            ]
+          },
+          {
+            "name": "StreamUtils",
+            "description": "Stream utility functions",
+            "methods": [
+              {
+                "name": "streamToBuffer(stream)",
+                "description": "Convert stream to buffer"
+              },
+              {
+                "name": "streamToString(stream)",
+                "description": "Convert stream to string"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "examples": {
+      "server-examples": {
+        "title": "Server Examples",
+        "examples": [
+          {
+            "title": "Basic REST API",
+            "description": "A simple REST API with CRUD operations",
+            "code": "import { createApp, json } from 'isahc';\n\nconst app = createApp();\napp.use(json());\n\nconst users = [];\n\n// Get all users\napp.get('/users', (ctx) => {\n  ctx.json(users);\n});\n\n// Get user by ID\napp.get('/users/:id', (ctx) => {\n  const user = users.find(u => u.id === ctx.params.id);\n  if (!user) {\n    ctx.status(404).json({ error: 'User not found' });\n    return;\n  }\n  ctx.json(user);\n});\n\n// Create user\napp.post('/users', (ctx) => {\n  const user = {\n    id: Date.now().toString(),\n    ...ctx.request.body\n  };\n  users.push(user);\n  ctx.status(201).json(user);\n});\n\n// Update user\napp.put('/users/:id', (ctx) => {\n  const index = users.findIndex(u => u.id === ctx.params.id);\n  if (index === -1) {\n    ctx.status(404).json({ error: 'User not found' });\n    return;\n  }\n  users[index] = { ...users[index], ...ctx.request.body };\n  ctx.json(users[index]);\n});\n\n// Delete user\napp.delete('/users/:id', (ctx) => {\n  const index = users.findIndex(u => u.id === ctx.params.id);\n  if (index === -1) {\n    ctx.status(404).json({ error: 'User not found' });\n    return;\n  }\n  users.splice(index, 1);\n  ctx.status(204).send();\n});\n\napp.listen(3000);"
+          },
+          {
+            "title": "Static File Server",
+            "description": "Serve static files with custom middleware",
+            "code": "import { createApp, staticFiles } from 'isahc';\nimport path from 'path';\n\nconst app = createApp();\n\n// Serve static files from public directory\napp.use(staticFiles(path.join(process.cwd(), 'public'), {\n  index: 'index.html',\n  dotfiles: 'ignore'\n}));\n\n// API routes\napp.get('/api/health', (ctx) => {\n  ctx.json({ status: 'ok', timestamp: new Date().toISOString() });\n});\n\napp.listen(3000, '0.0.0.0');"
+          }
+        ]
+      },
+      "client-examples": {
+        "title": "Client Examples",
+        "examples": [
+          {
+            "title": "HTTP Client Usage",
+            "description": "Making HTTP requests with the built-in client",
+            "code": "import { createClient, get, post } from 'isahc';\n\n// Using global functions\nasync function fetchData() {\n  try {\n    const response = await get('https://jsonplaceholder.typicode.com/posts/1');\n    console.log('Post:', response.data);\n    \n    const newPost = await post('https://jsonplaceholder.typicode.com/posts', {\n      title: 'My New Post',\n      body: 'This is the post content',\n      userId: 1\n    });\n    console.log('Created:', newPost.data);\n  } catch (error) {\n    console.error('Error:', error);\n  }\n}\n\n// Using client instance\nconst client = createClient('https://api.example.com');\nclient.setHeader('Authorization', 'Bearer token');\nclient.setTimeout(5000);\n\nasync function apiCall() {\n  try {\n    const users = await client.get('/users');\n    console.log('Users:', users.data);\n    \n    const user = await client.post('/users', {\n      name: 'John Doe',\n      email: 'john@example.com'\n    });\n    console.log('Created user:', user.data);\n  } catch (error) {\n    console.error('API Error:', error);\n  }\n}\n\nfetchData();\napiCall();"
+          }
+        ]
+      },
+      "middleware-examples": {
+        "title": "Middleware Examples",
+        "examples": [
+          {
+            "title": "Custom Authentication Middleware",
+            "description": "Create custom middleware for authentication",
+            "code": "import { createApp, json } from 'isahc';\n\nconst app = createApp();\napp.use(json());\n\n// Custom authentication middleware\nconst authMiddleware = (ctx, next) => {\n  const token = ctx.request.headers.authorization;\n  \n  if (!token || !token.startsWith('Bearer ')) {\n    ctx.status(401).json({ error: 'Unauthorized' });\n    return;\n  }\n  \n  // Verify token (simplified)\n  const actualToken = token.slice(7);\n  if (actualToken !== 'valid-token') {\n    ctx.status(401).json({ error: 'Invalid token' });\n    return;\n  }\n  \n  // Add user info to context\n  ctx.user = { id: 1, name: 'John Doe' };\n  return next();\n};\n\n// Logging middleware\nconst logMiddleware = (ctx, next) => {\n  const start = Date.now();\n  console.log(`${ctx.request.method} ${ctx.request.url}`);\n  \n  const result = next();\n  \n  const duration = Date.now() - start;\n  console.log(`Completed in ${duration}ms`);\n  \n  return result;\n};\n\n// Apply middleware\napp.use(logMiddleware);\n\n// Public routes\napp.get('/public', (ctx) => {\n  ctx.json({ message: 'This is public' });\n});\n\n// Protected routes\napp.use(authMiddleware);\napp.get('/protected', (ctx) => {\n  ctx.json({ \n    message: 'This is protected',\n    user: ctx.user \n  });\n});\n\napp.listen(3000);"
+          }
+        ]
+      }
+    }
+  }
+}
